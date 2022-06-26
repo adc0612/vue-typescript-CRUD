@@ -6,7 +6,7 @@
     <main>
       <TodoInput :item="todoText" @input="updateTodoText" @add="addTodoItem"></TodoInput>
       <ul>
-        <TodoListItem v-for="(todoItem, index) in todoItems" :key="index" :todoItem="todoItem" />
+        <TodoListItem v-for="(todoItem, index) in todoItems" :key="index" :todoItem="todoItem" :index="index" @remove="removeTodoItem" />
       </ul>
     </main>
   </div>
@@ -53,6 +53,11 @@ export default Vue.extend({
     },
     fetchTodoItems() {
       this.todoItems = storage.fetch();
+    },
+    removeTodoItem(index: number) {
+      console.log('remove', index);
+      this.todoItems.splice(index, 1);
+      storage.save(this.todoItems);
     },
   },
   created() {
